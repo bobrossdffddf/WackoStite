@@ -16,8 +16,14 @@ I've created a central place for you to edit everything: `shared/config.ts`.
 Go there to change:
 - Your identity/name
 - Skills and Interests
-- Projects (titles, descriptions, status)
+- Projects (titles, descriptions, status) - **To add more, just copy an existing project object and paste it below the last one.**
 - Blog Posts
+
+### View Deployment
+To see your site live:
+1. Click the **"Publish"** button in the top right corner of Replit.
+2. Follow the steps to set up a deployment.
+3. Once published, you'll get a URL (e.g., `your-app.replit.app`) to view the live site.
 
 ### Applying Changes
 1. Edit `shared/config.ts`.

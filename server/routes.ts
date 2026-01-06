@@ -3,6 +3,9 @@ import type { Server } from "http";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
 import { siteConfig } from "@shared/config";
+import { db } from "./db";
+import { projects, blogPosts } from "@shared/schema";
+import { sql } from "drizzle-orm";
 
 export async function registerRoutes(
   httpServer: Server,
@@ -26,14 +29,12 @@ export async function registerRoutes(
     res.json(post);
   });
 
-  // Re-sync logic: Only clear and re-seed if data is missing or out of sync
-  const currentProjects = await storage.getProjects();
-  const currentPosts = await storage.getBlogPosts();
+  // Re-sync logic: Only clear and re-seed if counts change
+  const projectCount = await db.select({ count: sql<number>`count(*)` }).from(projects);
+  const postCount = await db.select({ count: sql<number>`count(*)` }).from(blogPosts);
 
-  // Simple check: if counts match, assume sync is okay for now
-  // In a more robust app, we'd check a version or hash
-  if (currentProjects.length !== siteConfig.projects.length || 
-      currentPosts.length !== siteConfig.blogPosts.length) {
+  if (Number(projectCount[0].count) !== siteConfig.projects.length || 
+      Number(postCount[0].count) !== siteConfig.blogPosts.length) {
     console.log("Syncing database with config...");
     await storage.clearProjects();
     await storage.clearBlogPosts();

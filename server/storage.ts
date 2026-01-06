@@ -1,6 +1,6 @@
 import { projects, blogPosts, type Project, type BlogPost } from "@shared/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 export interface IStorage {
   getProjects(): Promise<Project[]>;
