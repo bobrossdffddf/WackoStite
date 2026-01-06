@@ -32,7 +32,7 @@ export default function Projects() {
       <div className="mb-12">
         <h1 className="text-4xl font-bold mb-4">Experiments & Builds</h1>
         <p className="text-muted-foreground text-lg">
-          A collection of things I've built, broken, and sometimes fixed.
+          Some things ive done
         </p>
       </div>
 

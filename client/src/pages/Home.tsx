@@ -39,7 +39,7 @@ export default function Home() {
         <p className="text-xl text-muted-foreground max-w-2xl mb-8 leading-relaxed">
           I'm Wacko. I do my best to learn new things. I dont know how to code
           but I love hardware and software. I vibecode when I need to and just
-          try to make cool things. I like phisical pen testing and am studying
+          try to make cool things. I like physical pen testing and am studying
           cyber security. Please DM me with any questions.
         </p>
 
@@ -103,20 +103,24 @@ export default function Home() {
             </h2>
             <div className="space-y-4 font-mono text-sm">
               <div className="flex justify-between items-center border-b border-border/30 pb-2">
-                <span className="text-muted-foreground ml-[9px] mr-[9px]">Focus </span>
+                <span className="text-muted-foreground ml-[9px] mr-[9px]">
+                  Focus{" "}
+                </span>
                 <span className="text-foreground">
                   Just getting it working lol
                 </span>
               </div>
               <div className="flex justify-between items-center border-b border-border/30 pb-2">
-                <span className="text-muted-foreground ml-[10px] mr-[10px]">Learning</span>
+                <span className="text-muted-foreground ml-[10px] mr-[10px]">
+                  Learning
+                </span>
                 <span className="text-foreground">
-                  Rust / Low-level Systems
+                  Everything I can im basically a dud :sob:
                 </span>
               </div>
               <div className="flex justify-between items-center pb-2">
                 <span className="text-muted-foreground">Availability</span>
-                <span className="text-green-400">Limited (Building)</span>
+                <span className="text-green-400">CST 12-9PM</span>
               </div>
             </div>
           </div>
@@ -124,7 +128,9 @@ export default function Home() {
       </div>
       {/* Skills Grid */}
       <section>
-        <h2 className="text-3xl font-bold mb-8 font-mono">~/stack</h2>
+        <h2 className="text-3xl font-bold mb-8 font-mono">
+          ~/Trying to learn i guess
+        </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {skills.map((skill, i) => (
             <motion.div
