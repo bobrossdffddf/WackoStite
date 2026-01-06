@@ -60,14 +60,14 @@ export const siteConfig = {
       description:
         "Made a ton of bots for servers paid or free and whatnot and ran on a RPI02W",
       tags: ["Node.js", "Vibecoding", "Discord.js"],
-      status: "Actively experimenting",
+      status: "Done",
       link: "#",
     },
     {
       title: "Self-Hosted Cloud Storage",
       description:
-        "Setting up a private Nextcloud instance to replace Google Drive, focusing on privacy and data sovereignty.",
-      tags: ["Nextcloud", "Docker"],
+        "Im a photographer and im sick and tired of having to worry about storage on phone when editing and shit.",
+      tags: ["idk", "Docker"],
       status: "More details soon",
       link: "#",
     },

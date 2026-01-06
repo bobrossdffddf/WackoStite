@@ -26,20 +26,27 @@ export async function registerRoutes(
     res.json(post);
   });
 
-  // Re-sync logic: Clear and re-seed from config on every startup
-  // This ensures config changes are reflected immediately
-  console.log("Syncing database with config...");
-  await storage.clearProjects();
-  await storage.clearBlogPosts();
+  // Re-sync logic: Only clear and re-seed if data is missing or out of sync
+  const currentProjects = await storage.getProjects();
+  const currentPosts = await storage.getBlogPosts();
 
-  for (const project of siteConfig.projects) {
-    await storage.createProject(project);
-  }
+  // Simple check: if counts match, assume sync is okay for now
+  // In a more robust app, we'd check a version or hash
+  if (currentProjects.length !== siteConfig.projects.length || 
+      currentPosts.length !== siteConfig.blogPosts.length) {
+    console.log("Syncing database with config...");
+    await storage.clearProjects();
+    await storage.clearBlogPosts();
 
-  for (const post of siteConfig.blogPosts) {
-    await storage.createBlogPost(post);
+    for (const project of siteConfig.projects) {
+      await storage.createProject(project);
+    }
+
+    for (const post of siteConfig.blogPosts) {
+      await storage.createBlogPost(post);
+    }
+    console.log("Sync complete.");
   }
-  console.log("Sync complete.");
 
   return httpServer;
 }
