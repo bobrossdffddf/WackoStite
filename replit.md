@@ -11,19 +11,21 @@ A technical, builder-focused personal website for Wacko, highlighting self-hosti
 
 ## How to Edit and Create Content
 
-### Creating New Blog Posts
-To add or edit blog posts, modify the `seedDatabase` logic in `server/routes.ts`. 
-1. Open `server/routes.ts`.
-2. Locate the `if (posts.length === 0)` block or add new `storage.createBlogPost` calls.
-3. The blog is currently read-only and populated via the backend storage layer.
+### The Content Config File
+I've created a central place for you to edit everything: `shared/config.ts`.
+Go there to change:
+- Your identity/name
+- Skills and Interests
+- Projects (titles, descriptions, status)
+- Blog Posts
 
-### Modifying Projects
-1. Open `server/routes.ts`.
-2. Locate the `if (projects.length === 0)` block.
-3. Add or update `storage.createProject` calls with the desired title, description, tags, and status.
+### Applying Changes
+1. Edit `shared/config.ts`.
+2. The app will automatically restart and pick up your changes for the initial setup. 
+3. Note: If you've already started the app and data is in the database, you might need to clear the database tables to re-seed from the config, or I can help you add a "Refresh Content" button later.
 
-### Status Placeholders for Projects
-Allowed statuses:
+### Project Status
+In the config, use these exact strings for status:
 - `In progress`
 - `Actively experimenting`
 - `More details soon`
