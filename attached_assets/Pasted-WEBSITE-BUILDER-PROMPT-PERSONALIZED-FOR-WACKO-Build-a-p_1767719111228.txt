@@ -1,0 +1,251 @@
+WEBSITE BUILDER PROMPT (PERSONALIZED FOR WACKO)
+
+Build a personal website with the following strict requirements.
+Do not add features, text, or assumptions that are not explicitly allowed.
+
+Identity & Branding
+
+The site owner name is Wacko.
+
+DO NOT use, infer, or reference my real name anywhere.
+
+The site should feel:
+
+Technical
+
+Builder-focused
+
+Experimental
+
+Personal, not corporate
+
+Content Rules (CRITICAL)
+
+Only include information explicitly listed below.
+
+Do NOT invent:
+
+Jobs
+
+Education
+
+Certifications
+
+Clients
+
+Years of experience
+
+If something is unknown, omit it entirely.
+
+About / Home Page Content
+
+You MAY state the following verified facts:
+
+I build, run, and test projects on my own server
+
+I actively work with:
+
+Node.js
+
+TypeScript
+
+React
+
+I self-host services and applications
+
+I experiment with:
+
+Web apps
+
+Discord bots
+
+Docker-based setups
+
+I prefer hands-on building and troubleshooting over theory
+
+Tone:
+
+Honest
+
+Direct
+
+Builder mindset
+
+No hype or marketing language
+
+Skills & Interests Section
+Things I’m Good At
+
+JavaScript / TypeScript
+
+React frontends
+
+Node.js backends
+
+Running services on Linux servers
+
+Debugging broken or misconfigured systems
+
+Deploying and rebuilding projects repeatedly until they work
+
+Things I’m Interested In / Enjoy
+
+You MAY include all of the following interests:
+
+Self-hosting services instead of relying on third-party platforms
+
+Servers & infrastructure (VPS, Proxmox, Linux environments)
+
+Docker & containerized apps
+
+Web app deployment workflows
+
+Automation and scripts that reduce manual work
+
+Discord bots and integrations
+
+Cloudflare tunnels & DNS
+
+Performance, stability, and uptime
+
+Learning by breaking and fixing things
+
+Minimal, functional UI over flashy design
+
+Do NOT add any interests beyond this list.
+
+Formatting rules:
+
+Use icons or cards
+
+No progress bars
+
+No skill levels
+
+No timelines
+
+Projects Section
+
+Layout should support technical projects
+
+Do NOT fabricate project names
+
+Allowed placeholders:
+
+“In progress”
+
+“Actively experimenting”
+
+“More details soon”
+
+Projects should feel:
+
+Practical
+
+Infrastructure-focused
+
+Real, even if unfinished
+
+Blog Section
+
+Include a working blog page
+
+Blog is read-only
+
+Blog posts may be placeholders
+
+Blog Rules (NON-NEGOTIABLE)
+
+Do NOT add:
+
+Plus buttons
+
+Edit/create UI
+
+Admin panels
+
+Login systems
+
+Blog must feel like a public-facing blog, not a CMS
+
+Animations & Motion
+
+Use many animations, but all must be:
+
+Smooth
+
+Stable
+
+Non-breaking
+
+Allowed:
+
+Page transitions
+
+Scroll-based reveals
+
+Hover animations
+
+Subtle background motion
+
+Animations must:
+
+Work on mobile
+
+Never block content
+
+Never cause layout shift
+
+Design Constraints
+
+Modern, dark or neutral palette
+
+Clean typography
+
+Technical aesthetic
+
+Minimal clutter
+
+No popups
+
+No AI filler text
+
+Technical Expectations
+
+Fully responsive
+
+Fast load times
+
+Semantic HTML
+
+Accessible navigation
+
+Clear menu or tab system
+
+Absolute “DO NOT” List
+
+Do NOT use my real name
+
+Do NOT invent personal details
+
+Do NOT exaggerate skills
+
+Do NOT add admin or edit controls
+
+Do NOT add social media links unless explicitly asked
+
+Do NOT add broken or chaotic animations
+
+End Goal
+
+A real, honest, animated personal website for Wacko that reflects someone who:
+
+Self-hosts
+
+Builds infrastructure
+
+Experiments constantly
+
+Learns by fixing broken systems
+
+Not a résumé. Not a fake startup page.
