@@ -109,7 +109,7 @@ export default function Home() {
                 </span>
               </div>
               <div className="flex justify-between items-center border-b border-border/30 pb-2">
-                <span className="text-muted-foreground">Learning</span>
+                <span className="text-muted-foreground ml-[10px] mr-[10px]">Learning</span>
                 <span className="text-foreground">
                   Rust / Low-level Systems
                 </span>
