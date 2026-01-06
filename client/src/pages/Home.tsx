@@ -2,15 +2,24 @@ import { Layout } from "@/components/Layout";
 import { GlitchText } from "@/components/GlitchText";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, Server, Terminal, Shield, Cpu, Activity, Database, Cloud } from "lucide-react";
+import {
+  ArrowRight,
+  Server,
+  Terminal,
+  Shield,
+  Cpu,
+  Activity,
+  Database,
+  Cloud,
+} from "lucide-react";
 
 export default function Home() {
   const skills = [
     { name: "Node.js", icon: Server },
-    { name: "TypeScript", icon: Code2 },
+    { name: "CMD", icon: Code2 },
     { name: "Docker", icon: Container },
     { name: "Linux", icon: Terminal },
-    { name: "React", icon: Cpu },
+    { name: "Esp32", icon: Cpu },
     { name: "Self-Hosting", icon: Cloud },
   ];
 
@@ -21,35 +30,41 @@ export default function Home() {
         <div className="inline-block px-3 py-1 mb-6 text-xs font-mono font-semibold tracking-wider text-primary bg-primary/10 rounded-full border border-primary/20">
           SYSTEM_READY
         </div>
-        
+
         <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-          I build <GlitchText text="digital infrastructure" className="text-primary text-glow" /> 
-          <br /> and break things.
+          Welcome <GlitchText text="User" className="text-primary text-glow" />
+          <br /> to my page.
         </h1>
-        
+
         <p className="text-xl text-muted-foreground max-w-2xl mb-8 leading-relaxed">
-          I'm Wacko. I build, run, and test on my own bare metal. 
-          Specializing in backend systems, self-hosted services, and experimental web apps.
-          If it runs on Linux, I'll probably try to optimize it.
+          I'm Wacko. I do my best to learn new things. I dont know how to code
+          but I love hardware and software. I vibecode when I need to and just
+          try to make cool things. I like phisical pen testing and am studying
+          cyber security. Please DM me with any questions.
         </p>
 
         <div className="flex flex-wrap gap-4">
-          <Link href="/projects" className="group inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded font-semibold transition-transform hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(74,222,128,0.4)]">
+          <Link
+            href="/projects"
+            className="group inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded font-semibold transition-transform hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(74,222,128,0.4)]"
+          >
             View Projects
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
-          
-          <Link href="/blog" className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-6 py-3 rounded font-semibold border border-border hover:bg-secondary/80 transition-colors">
+
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-6 py-3 rounded font-semibold border border-border hover:bg-secondary/80 transition-colors"
+          >
             Read Logs
           </Link>
         </div>
       </section>
-
       {/* About Section - Grid Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
         <div className="bg-secondary/30 border border-border/50 rounded-lg p-8 relative overflow-hidden group">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-          
+
           <div className="relative z-10">
             <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
               <Terminal className="text-primary" />
@@ -58,15 +73,21 @@ export default function Home() {
             <ul className="space-y-4 text-muted-foreground">
               <li className="flex gap-3">
                 <span className="text-primary mt-1">▹</span>
-                <span>Self-host everything possible. Data ownership matters.</span>
+                <span>
+                  Your data matters to you. In a zombie apocalypse data centers
+                  wont care about your data{" "}
+                </span>
               </li>
               <li className="flex gap-3">
                 <span className="text-primary mt-1">▹</span>
-                <span>Simple, robust code over complex abstractions.</span>
+                <span>
+                  It doesnt matter how you do it as long as you do it. If it
+                  doesnt make money or take jobs just vibecode it.
+                </span>
               </li>
               <li className="flex gap-3">
                 <span className="text-primary mt-1">▹</span>
-                <span>Build to learn. Fail fast. Fix faster.</span>
+                <span> Ask my political opions.</span>
               </li>
             </ul>
           </div>
@@ -74,7 +95,7 @@ export default function Home() {
 
         <div className="bg-secondary/30 border border-border/50 rounded-lg p-8 relative overflow-hidden group">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-          
+
           <div className="relative z-10">
             <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
               <Activity className="text-primary" />
@@ -82,12 +103,16 @@ export default function Home() {
             </h2>
             <div className="space-y-4 font-mono text-sm">
               <div className="flex justify-between items-center border-b border-border/30 pb-2">
-                <span className="text-muted-foreground">Focus</span>
-                <span className="text-foreground">Performance Optimization</span>
+                <span className="text-muted-foreground ml-[9px] mr-[9px]">Focus </span>
+                <span className="text-foreground">
+                  Just getting it working lol
+                </span>
               </div>
               <div className="flex justify-between items-center border-b border-border/30 pb-2">
                 <span className="text-muted-foreground">Learning</span>
-                <span className="text-foreground">Rust / Low-level Systems</span>
+                <span className="text-foreground">
+                  Rust / Low-level Systems
+                </span>
               </div>
               <div className="flex justify-between items-center pb-2">
                 <span className="text-muted-foreground">Availability</span>
@@ -97,7 +122,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
       {/* Skills Grid */}
       <section>
         <h2 className="text-3xl font-bold mb-8 font-mono">~/stack</h2>
@@ -112,7 +136,9 @@ export default function Home() {
               className="flex flex-col items-center justify-center p-6 bg-secondary/20 border border-border/50 rounded hover:border-primary/50 hover:bg-secondary/40 transition-all group"
             >
               <skill.icon className="w-8 h-8 mb-3 text-muted-foreground group-hover:text-primary transition-colors" />
-              <span className="font-mono text-sm font-medium">{skill.name}</span>
+              <span className="font-mono text-sm font-medium">
+                {skill.name}
+              </span>
             </motion.div>
           ))}
         </div>
