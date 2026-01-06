@@ -1,38 +1,38 @@
-import { type User, type InsertUser } from "@shared/schema";
-import { randomUUID } from "crypto";
-
-// modify the interface with any CRUD methods
-// you might need
+import { projects, blogPosts, type Project, type BlogPost } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
-  getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  getProjects(): Promise<Project[]>;
+  getBlogPosts(): Promise<BlogPost[]>;
+  getBlogPost(slug: string): Promise<BlogPost | undefined>;
+  createProject(project: Partial<Project>): Promise<Project>;
+  createBlogPost(post: Partial<BlogPost>): Promise<BlogPost>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-
-  constructor() {
-    this.users = new Map();
+export class DatabaseStorage implements IStorage {
+  async getProjects(): Promise<Project[]> {
+    return await db.select().from(projects);
   }
 
-  async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+  async getBlogPosts(): Promise<BlogPost[]> {
+    return await db.select().from(blogPosts).orderBy(blogPosts.publishedAt);
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+  async getBlogPost(slug: string): Promise<BlogPost | undefined> {
+    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
+    return post;
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+  async createProject(project: Partial<Project>): Promise<Project> {
+    const [newProject] = await db.insert(projects).values(project as any).returning();
+    return newProject;
+  }
+
+  async createBlogPost(post: Partial<BlogPost>): Promise<BlogPost> {
+    const [newPost] = await db.insert(blogPosts).values(post as any).returning();
+    return newPost;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
