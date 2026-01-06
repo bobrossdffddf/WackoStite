@@ -26,20 +26,20 @@ export async function registerRoutes(
     res.json(post);
   });
 
-  // Seed data from config
-  const projects = await storage.getProjects();
-  if (projects.length === 0) {
-    for (const project of siteConfig.projects) {
-      await storage.createProject(project);
-    }
+  // Re-sync logic: Clear and re-seed from config on every startup
+  // This ensures config changes are reflected immediately
+  console.log("Syncing database with config...");
+  await storage.clearProjects();
+  await storage.clearBlogPosts();
+
+  for (const project of siteConfig.projects) {
+    await storage.createProject(project);
   }
 
-  const posts = await storage.getBlogPosts();
-  if (posts.length === 0) {
-    for (const post of siteConfig.blogPosts) {
-      await storage.createBlogPost(post);
-    }
+  for (const post of siteConfig.blogPosts) {
+    await storage.createBlogPost(post);
   }
+  console.log("Sync complete.");
 
   return httpServer;
 }

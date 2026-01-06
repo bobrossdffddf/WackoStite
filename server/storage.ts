@@ -8,6 +8,8 @@ export interface IStorage {
   getBlogPost(slug: string): Promise<BlogPost | undefined>;
   createProject(project: Partial<Project>): Promise<Project>;
   createBlogPost(post: Partial<BlogPost>): Promise<BlogPost>;
+  clearProjects(): Promise<void>;
+  clearBlogPosts(): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -32,6 +34,14 @@ export class DatabaseStorage implements IStorage {
   async createBlogPost(post: Partial<BlogPost>): Promise<BlogPost> {
     const [newPost] = await db.insert(blogPosts).values(post as any).returning();
     return newPost;
+  }
+
+  async clearProjects(): Promise<void> {
+    await db.delete(projects);
+  }
+
+  async clearBlogPosts(): Promise<void> {
+    await db.delete(blogPosts);
   }
 }
 
