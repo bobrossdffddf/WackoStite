@@ -43,6 +43,14 @@ docker-compose up -d --build
 ### 4. Verification
 Your app will be running at `http://<YOUR_SERVER_IP>:5000`. 
 
+> **CRITICAL:** Use `http://` and NOT `https://`. Since there is no SSL certificate configured by default, using `https://` will cause a `ERR_SSL_PROTOCOL_ERROR`.
+
+### Troubleshooting SSL Errors
+If you see "This site can't provide a secure connection":
+1. Check your browser's address bar.
+2. Ensure it says `http://192.168.68.140:5000` (or your IP).
+3. If it automatically redirects to `https://`, try using a Private/Incognito window or a different browser.
+
 > **Note:** Since PM2 is running **inside** the container, commands like `pm2 list` will not work on your host machine. Instead, use Docker commands to manage the app:
 
 - **View Logs:** `docker-compose logs -f`
