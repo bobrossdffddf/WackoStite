@@ -80,7 +80,7 @@ export const siteConfig = {
       slug: "why-i-self-host",
       excerpt: "Ownership of data is more important than convenience.",
       content:
-        "Ownership of data is more important than convenience. In this post, I explore the trade-offs between using SaaS products and hosting your own alternatives. It's not just about privacy; it's about learning how things work under the hood.",
+        "Ownership of data is more important than convenience. I feel like not a lot of people care what happens to their data or where it is but I feel like more should. If im being honest I didnt at first. I felt like I owned everything I bought but then I relzied how greedy companies are. They would sell out souls if they could and wouldnt bat an eye. I feel like people need to start buying DVDs again and stop letting corps control us. Becuase of this I have started to self host my own data. The final reason is how are you gonna keep yourself entertained durring a zombie apocalypse, becuase I know I will have 50b downloaded reels to last me through the end of time. ",
     },
     {
       title: "My Docker Workflow",
@@ -92,9 +92,9 @@ export const siteConfig = {
     {
       title: "Recovering from a Failed Deploy",
       slug: "recovering-failed-deploy",
-      excerpt: "Lessons learned when production went down at 3 AM.",
+      excerpt: "JUST ASK CHATGPT.",
       content:
-        "It happens to everyone. You push a change, and suddenly nothing works. This is the story of how I broke my reverse proxy and the steps I took to troubleshoot and fix it.",
+        "Coming soon if anyone cares",
     },
   ],
 };

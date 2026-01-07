@@ -16,7 +16,7 @@ export function Navigation() {
     <nav className="fixed top-0 left-0 w-full z-50 border-b border-border/40 bg-background/80 backdrop-blur-md">
       <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
         <div className="font-mono font-bold text-lg text-primary tracking-tighter">
-          wacko<span className="text-muted-foreground">.dev</span>
+          wackoxyz<span className="text-muted-foreground">.org</span>
         </div>
 
         <div className="flex gap-1 sm:gap-6">
