@@ -93,8 +93,7 @@ export const siteConfig = {
       title: "Recovering from a Failed Deploy",
       slug: "recovering-failed-deploy",
       excerpt: "JUST ASK CHATGPT.",
-      content:
-        "Coming soon if anyone cares",
+      content: "Coming soon if anyone cares",
     },
   ],
 };

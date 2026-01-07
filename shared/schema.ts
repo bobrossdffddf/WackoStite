@@ -15,7 +15,7 @@ export const blogPostSchema = z.object({
   slug: z.string(),
   excerpt: z.string(),
   content: z.string(),
-  publishedAt: z.date().optional(),
+  publishedAt: z.coerce.date().optional(),
 });
 
 export type Project = z.infer<typeof projectSchema>;
