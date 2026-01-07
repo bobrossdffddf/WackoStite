@@ -51,6 +51,7 @@ export default function Projects() {
                 <Circle className={`w-2 h-2 fill-current ${
                   project.status === "In progress" ? "text-yellow-500" :
                   project.status === "Actively experimenting" ? "text-primary" :
+                  project.status === "Done" ? "text-green-500" :
                   "text-muted-foreground"
                 }`} />
                 {project.status}
@@ -76,7 +77,7 @@ export default function Projects() {
               ))}
             </div>
 
-            {project.link && (
+            {project.link && project.link !== "#" ? (
               <a 
                 href={project.link}
                 target="_blank" 
@@ -84,8 +85,12 @@ export default function Projects() {
                 className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
               >
                 <ExternalLink className="w-4 h-4" />
-                View Deployment
+                View Project
               </a>
+            ) : (
+              <div className="text-sm font-medium text-muted-foreground italic">
+                Development in progress...
+              </div>
             )}
             
             {/* Decoration */}

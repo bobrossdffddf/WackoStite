@@ -25,5 +25,15 @@ export async function registerRoutes(
     res.json(post);
   });
 
+  app.post(api.projects.list.path, async (req, res) => {
+    const project = await storage.createProject(req.body);
+    res.json(project);
+  });
+
+  app.post(api.blog.list.path, async (req, res) => {
+    const post = await storage.createBlogPost(req.body);
+    res.json(post);
+  });
+
   return httpServer;
 }

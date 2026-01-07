@@ -29,7 +29,7 @@ export class MemStorage implements IStorage {
   }
 
   async getBlogPosts(): Promise<BlogPost[]> {
-    return this.blogPosts;
+    return this.blogPosts.sort((a, b) => (b.publishedAt?.getTime() || 0) - (a.publishedAt?.getTime() || 0));
   }
 
   async getBlogPost(slug: string): Promise<BlogPost | undefined> {
@@ -37,7 +37,13 @@ export class MemStorage implements IStorage {
   }
 
   async createProject(project: Partial<Project>): Promise<Project> {
-    const newProject = { ...project, id: this.projects.length + 1 } as Project;
+    const newProject = {
+      ...project,
+      id: this.projects.length + 1,
+      tags: project.tags || [],
+      status: project.status || "In progress",
+      link: project.link || "#"
+    } as Project;
     this.projects.push(newProject);
     return newProject;
   }
@@ -46,7 +52,8 @@ export class MemStorage implements IStorage {
     const newPost = { 
       ...post, 
       id: this.blogPosts.length + 1,
-      publishedAt: new Date()
+      publishedAt: new Date(),
+      slug: post.slug || (post.title ? post.title.toLowerCase().replace(/ /g, '-') : `post-${this.blogPosts.length + 1}`)
     } as BlogPost;
     this.blogPosts.push(newPost);
     return newPost;
