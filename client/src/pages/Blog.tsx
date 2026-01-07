@@ -52,9 +52,9 @@ export default function Blog() {
 
             <div className="flex flex-col md:flex-row md:items-baseline md:gap-4 mb-2">
               <Link href={`/blog/${post.slug}`}>
-                <h2 className="text-2xl font-bold hover:text-primary transition-colors cursor-pointer">
+                <a className="text-2xl font-bold hover:text-primary transition-colors cursor-pointer">
                   {post.title}
-                </h2>
+                </a>
               </Link>
               <div className="flex items-center gap-2 text-sm text-muted-foreground font-mono">
                 <Calendar className="w-3 h-3" />
@@ -66,8 +66,10 @@ export default function Blog() {
               {post.excerpt}
             </p>
 
-            <Link href={`/blog/${post.slug}`} className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
-              Read log entry <ArrowRight className="w-3 h-3" />
+            <Link href={`/blog/${post.slug}`}>
+              <a className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                Read log entry <ArrowRight className="w-3 h-3" />
+              </a>
             </Link>
           </motion.article>
         ))}

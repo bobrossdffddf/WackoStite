@@ -132,6 +132,16 @@ export default function Home() {
                   <span className="text-muted-foreground">Availability</span>
                   <span className="text-green-400">CST 12-9PM</span>
                 </div>
+                <div className="pt-4">
+                  <a 
+                    href="https://discord.com/users/717462002235965492" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-[#5865F2] text-white px-4 py-2 rounded font-semibold text-sm hover:bg-[#4752C4] transition-colors w-full justify-center"
+                  >
+                    Connect on Discord
+                  </a>
+                </div>
               </div>
             </div>
           </div>

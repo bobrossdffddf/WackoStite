@@ -80,7 +80,22 @@ export function TerminalShell({ onWeb }: { onWeb: () => void }) {
         }
         break;
       case "/contact":
-        setHistory(prev => [...prev, { type: "output", content: "Discord: Justawacko_" }]);
+        setHistory(prev => [...prev, { 
+          type: "output", 
+          content: (
+            <div className="space-y-2">
+              <p>Discord: Justawacko_</p>
+              <a 
+                href="https://discord.com/users/717462002235965492" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-block bg-[#5865F2] text-white px-4 py-1 rounded text-xs hover:bg-[#4752C4] transition-colors"
+              >
+                Open Discord Profile
+              </a>
+            </div>
+          )
+        }]);
         break;
       case "/clear":
         setHistory([]);
