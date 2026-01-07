@@ -31,11 +31,15 @@ fi
 log "Building Docker images..."
 docker-compose build --pull || error "Docker build failed"
 
-log "Stopping existing containers to clear port bindings..."
-docker-compose down
+log "Cleaning up old containers..."
+docker-compose down --remove-orphans
 
 log "Starting application containers..."
 docker-compose up -d || error "Failed to start containers"
+
+# Proxmox CT specific: Ensure we wait for networking
+log "Waiting for container networking to stabilize..."
+sleep 10
 
 # 3. Process Management Check
 log "Checking process health..."
