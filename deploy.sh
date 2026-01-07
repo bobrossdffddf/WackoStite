@@ -28,8 +28,11 @@ fi
 # ufw allow 5000/tcp || log "UFW not found or rule already exists"
 
 # 2. Build and Start
-log "Building Docker images (this may take a minute on first run)..."
+log "Building Docker images..."
 docker-compose build --pull || error "Docker build failed"
+
+log "Stopping existing containers to clear port bindings..."
+docker-compose down
 
 log "Starting application containers..."
 docker-compose up -d || error "Failed to start containers"

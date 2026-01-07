@@ -16,4 +16,5 @@ COPY --from=builder /app/shared ./shared
 EXPOSE 5000
 ENV NODE_ENV=production
 ENV PORT=5000
-CMD ["pm2-runtime", "dist/index.cjs", "--name", "portfolio-app", "--", "--host", "0.0.0.0"]
+# Ensure we bind to 0.0.0.0 explicitly
+CMD ["node", "dist/index.cjs"]
