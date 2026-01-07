@@ -1,53 +1,52 @@
-# Self-Hosting Guide (Docker)
+# Self-Hosting Guide (Debian 13)
 
-To host this application on your own server using Docker, follow these steps:
+Follow these steps to host your portfolio website on a Debian 13 server using Docker.
 
-### 1. Create a `Dockerfile`
-Create a file named `Dockerfile` in the root of your project:
+## Prerequisites
 
-```dockerfile
-# Use Node.js 20
-FROM node:20-slim
+- Debian 13 (Bookworm)
+- Root or sudo access
 
-WORKDIR /app
+## Step-by-Step Deployment
 
-# Copy package files and install dependencies
-COPY package*.json ./
-RUN npm install
+### 1. Preparation
+Connect to your server via SSH and ensure you are in the directory where you want to host the app.
 
-# Copy the rest of the application
-COPY . .
-
-# Build the application
-RUN npm run build
-
-# Expose the port
-EXPOSE 5000
-
-# Start the application
-CMD ["npm", "start"]
-```
-
-### 2. Create a `docker-compose.yml`
-Create a file named `docker-compose.yml` in the root:
-
-```yaml
-services:
-  app:
-    build: .
-    ports:
-      - "5000:5000"
-    restart: always
-    environment:
-      - NODE_ENV=production
-      - PORT=5000
-```
-
-### 3. Build and Run
-On your Debian 13 server, run:
+### 2. Run the Docker Helper Script
+We have provided a `deploy.sh` script that automates the installation of Docker, Node.js, and the setup of your application.
 
 ```bash
-docker compose up -d --build
+# Make the script executable
+chmod +x deploy.sh
+
+# Run the deployment
+sudo ./deploy.sh
 ```
 
-The application will now be accessible at `http://your-server-ip:5000`.
+### 3. Manual Steps (If not using the script)
+
+If you prefer to run commands manually:
+
+**Install Dependencies:**
+```bash
+apt update
+apt install -y git curl build-essential docker.io docker-compose
+```
+
+**Clone and Build:**
+```bash
+git clone <your-repo-url>
+cd <repo-folder>
+docker-compose up -d --build
+```
+
+### 4. Verification
+Your app will be running at `http://<YOUR_SERVER_IP>:5000`.
+
+## Logging and Management
+
+- **View Logs:** `docker-compose logs -f`
+- **Restart App:** `docker-compose restart`
+- **Stop App:** `docker-compose down`
+
+The application uses **PM2** inside the container to ensure fast startup and process stability.

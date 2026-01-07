@@ -1,9 +1,9 @@
 services:
-  web:
+  app:
     build: .
     ports:
       - "5000:5000"
-    environment:
-      - DATABASE_URL=${DATABASE_URL}
-      - SESSION_SECRET=${SESSION_SECRET}
     restart: always
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
