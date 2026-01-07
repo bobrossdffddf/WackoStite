@@ -24,11 +24,8 @@ if ! [ -x "$(command -v docker)" ]; then
     apt-get update && apt-get install -y docker.io docker-compose || error "Failed to install Docker"
 fi
 
-if ! [ -x "$(command -v node)" ]; then
-    log "Node.js not found. Installing Node.js 20..."
-    curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-    apt-get install -y nodejs || error "Failed to install Node.js"
-fi
+# Clear any potential stale rules (optional, be careful)
+# ufw allow 5000/tcp || log "UFW not found or rule already exists"
 
 # 2. Build and Start
 log "Building Docker images (this may take a minute on first run)..."

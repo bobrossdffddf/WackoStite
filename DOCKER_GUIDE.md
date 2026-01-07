@@ -45,11 +45,11 @@ Your app will be running at `http://<YOUR_SERVER_IP>:5000`.
 
 > **CRITICAL:** Use `http://` and NOT `https://`. Since there is no SSL certificate configured by default, using `https://` will cause a `ERR_SSL_PROTOCOL_ERROR`.
 
-### Troubleshooting SSL Errors
-If you see "This site can't provide a secure connection":
-1. Check your browser's address bar.
-2. Ensure it says `http://192.168.68.140:5000` (or your IP).
-3. If it automatically redirects to `https://`, try using a Private/Incognito window or a different browser.
+### Troubleshooting Connection Issues
+If you see a connection error:
+1. **Firewall:** Ensure port 5000 is open. On Debian, try: `sudo ufw allow 5000/tcp`.
+2. **Browser:** Force HTTP by typing `http://` manually or using an Incognito window.
+3. **Internal Binding:** The server is configured to bind to `0.0.0.0`, ensuring it accepts connections from outside the container.
 
 > **Note:** Since PM2 is running **inside** the container, commands like `pm2 list` will not work on your host machine. Instead, use Docker commands to manage the app:
 
