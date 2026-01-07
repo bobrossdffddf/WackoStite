@@ -52,6 +52,7 @@ If you see a connection error:
 3. **Internal Binding:** The server is configured to bind to `0.0.0.0`, ensuring it accepts connections from outside the container.
 4. **Proxmox CT (LXC):** Ensure your container has "Nesting" enabled in the Proxmox UI (Options -> Features -> Nesting). Without this, Docker networking inside an LXC can fail.
 5. **Port Conflict:** Ensure no other service on the Proxmox host or CT is using port 5000.
+6. **Disk Space:** If the build fails with "no space left on device", run `docker system prune -a` to clean up old images.
 
 > **Note:** Since PM2 is running **inside** the container, commands like `pm2 list` will not work on your host machine. Instead, use Docker commands to manage the app:
 

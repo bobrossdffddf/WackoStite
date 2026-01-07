@@ -17,6 +17,10 @@ error() {
 # --- STARTUP SEQUENCE ---
 log "Starting deployment sequence for Debian 13..."
 
+# 0. Space Cleanup
+log "Cleaning up Docker system to free space..."
+docker system prune -f --volumes || log "Prune failed, continuing..."
+
 # 1. Dependency Check
 log "Checking for system dependencies..."
 if ! [ -x "$(command -v docker)" ]; then
