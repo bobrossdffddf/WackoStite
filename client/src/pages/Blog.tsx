@@ -52,7 +52,7 @@ export default function Blog() {
 
             <div className="flex flex-col md:flex-row md:items-baseline md:gap-4 mb-2">
               <Link href={`/blog/${post.slug}`}>
-                <a className="text-2xl font-bold hover:text-primary transition-colors cursor-pointer">
+                <a data-testid={`link-blog-${post.slug}`} className="text-2xl font-bold hover:text-primary transition-colors cursor-pointer">
                   {post.title}
                 </a>
               </Link>
@@ -67,7 +67,7 @@ export default function Blog() {
             </p>
 
             <Link href={`/blog/${post.slug}`}>
-              <a className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+              <a data-testid={`link-blog-read-more-${post.slug}`} className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
                 Read log entry <ArrowRight className="w-3 h-3" />
               </a>
             </Link>
