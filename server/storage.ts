@@ -1,6 +1,5 @@
-import { projects, blogPosts, type Project, type BlogPost } from "@shared/schema";
-import { db } from "./db";
-import { eq, sql } from "drizzle-orm";
+import { type Project, type BlogPost } from "@shared/schema";
+import { siteConfig } from "@shared/config";
 
 export interface IStorage {
   getProjects(): Promise<Project[]>;
@@ -12,37 +11,54 @@ export interface IStorage {
   clearBlogPosts(): Promise<void>;
 }
 
-export class DatabaseStorage implements IStorage {
+export class MemStorage implements IStorage {
+  private projects: Project[];
+  private blogPosts: BlogPost[];
+
+  constructor() {
+    this.projects = siteConfig.projects.map((p, i) => ({ ...p, id: i + 1 }));
+    this.blogPosts = siteConfig.blogPosts.map((p, i) => ({ 
+      ...p, 
+      id: i + 1,
+      publishedAt: new Date()
+    }));
+  }
+
   async getProjects(): Promise<Project[]> {
-    return await db.select().from(projects);
+    return this.projects;
   }
 
   async getBlogPosts(): Promise<BlogPost[]> {
-    return await db.select().from(blogPosts).orderBy(blogPosts.publishedAt);
+    return this.blogPosts;
   }
 
   async getBlogPost(slug: string): Promise<BlogPost | undefined> {
-    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
-    return post;
+    return this.blogPosts.find(post => post.slug === slug);
   }
 
   async createProject(project: Partial<Project>): Promise<Project> {
-    const [newProject] = await db.insert(projects).values(project as any).returning();
+    const newProject = { ...project, id: this.projects.length + 1 } as Project;
+    this.projects.push(newProject);
     return newProject;
   }
 
   async createBlogPost(post: Partial<BlogPost>): Promise<BlogPost> {
-    const [newPost] = await db.insert(blogPosts).values(post as any).returning();
+    const newPost = { 
+      ...post, 
+      id: this.blogPosts.length + 1,
+      publishedAt: new Date()
+    } as BlogPost;
+    this.blogPosts.push(newPost);
     return newPost;
   }
 
   async clearProjects(): Promise<void> {
-    await db.delete(projects);
+    this.projects = [];
   }
 
   async clearBlogPosts(): Promise<void> {
-    await db.delete(blogPosts);
+    this.blogPosts = [];
   }
 }
 
-export const storage = new DatabaseStorage();
+export const storage = new MemStorage();
