@@ -41,12 +41,11 @@ docker-compose up -d --build
 ```
 
 ### 4. Verification
-Your app will be running at `http://<YOUR_SERVER_IP>:5000`.
+Your app will be running at `http://<YOUR_SERVER_IP>:5000`. 
 
-## Logging and Management
+> **Note:** Since PM2 is running **inside** the container, commands like `pm2 list` will not work on your host machine. Instead, use Docker commands to manage the app:
 
 - **View Logs:** `docker-compose logs -f`
 - **Restart App:** `docker-compose restart`
+- **Check Status:** `docker-compose ps`
 - **Stop App:** `docker-compose down`
-
-The application uses **PM2** inside the container to ensure fast startup and process stability.

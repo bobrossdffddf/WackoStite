@@ -41,8 +41,18 @@ docker-compose up -d || error "Failed to start containers"
 log "Checking process health..."
 sleep 5
 if docker-compose ps | grep -q "Up"; then
-    log "SUCCESS: $APP_NAME is running on http://localhost:$PORT"
-    log "To view real-time logs, run: docker-compose logs -f"
+    # Get the local IP address
+    IP_ADDR=$(hostname -I | awk '{print $1}')
+    log "----------------------------------------------------------------"
+    log "SUCCESS: $APP_NAME is running!"
+    log "URL (Network): http://$IP_ADDR:$PORT"
+    log "URL (Local):   http://localhost:$PORT"
+    log "----------------------------------------------------------------"
+    log "NOTE: PM2 is running INSIDE the container for stability."
+    log "To manage the app, use docker commands:"
+    log "- View Logs: docker-compose logs -f"
+    log "- Restart:   docker-compose restart"
+    log "- Status:    docker-compose ps"
 else
     error "Containers failed to start. Check 'docker-compose logs' for details."
 fi
