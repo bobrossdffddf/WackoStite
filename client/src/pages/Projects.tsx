@@ -77,20 +77,21 @@ export default function Projects() {
               ))}
             </div>
 
-            {project.link && project.link !== "#" ? (
+            {project.link && (
               <a 
-                href={project.link}
+                href={project.link === "#" ? undefined : project.link}
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
+                onClick={(e) => project.link === "#" && e.preventDefault()}
+                className={`inline-flex items-center gap-2 text-sm font-medium transition-colors ${
+                  project.link === "#" 
+                    ? "text-muted-foreground cursor-default" 
+                    : "text-foreground hover:text-primary"
+                }`}
               >
                 <ExternalLink className="w-4 h-4" />
-                View Project
+                {project.link === "#" ? "No Deployment Link" : "View Deployment"}
               </a>
-            ) : (
-              <div className="text-sm font-medium text-muted-foreground italic">
-                Development in progress...
-              </div>
             )}
             
             {/* Decoration */}

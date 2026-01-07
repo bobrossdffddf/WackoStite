@@ -18,12 +18,6 @@ import {
 } from "lucide-react";
 
 export default function Home() {
-  const [showTerminal, setShowTerminal] = useState(true);
-
-  if (showTerminal) {
-    return <TerminalAnimation onComplete={() => setShowTerminal(false)} />;
-  }
-
   const skills = [
     { name: "Node.js", icon: Server },
     { name: "CMD", icon: Code2 },
