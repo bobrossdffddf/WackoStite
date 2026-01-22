@@ -29,7 +29,7 @@ export const messageSchema = z.object({
   id: z.number(),
   roomId: z.string(),
   content: z.string(),
-  type: z.enum(["text", "image"]).default("text"),
+  type: z.enum(["text", "image", "video"]).default("text"),
   createdAt: z.coerce.date(),
 });
 

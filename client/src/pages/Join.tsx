@@ -15,12 +15,15 @@ export default function Join() {
   const [isJoining, setIsJoining] = useState(false);
 
   const handleHost = async () => {
+    const password = prompt("Enter room creation password:");
+    if (!password) return;
+
     try {
       setIsHosting(true);
       const hostId = Math.random().toString(36).substring(7);
       localStorage.setItem("host-id", hostId);
       
-      const res = await apiRequest("POST", "/api/rooms", {}, {
+      const res = await apiRequest("POST", "/api/rooms", { password }, {
         "x-host-id": hostId
       });
       const room = await res.json();
@@ -33,7 +36,7 @@ export default function Join() {
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Failed to create room.",
+        description: error instanceof Error ? error.message : "Failed to create room.",
       });
     } finally {
       setIsHosting(false);

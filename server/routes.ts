@@ -36,7 +36,11 @@ export async function registerRoutes(
   });
 
   app.post("/api/rooms", async (req, res) => {
-    const hostId = req.headers["x-host-id"] as string || "anonymous";
+    const { password } = req.body;
+    if (password !== "WackoDebate2026") {
+      return res.status(401).json({ message: "Invalid room creation password" });
+    }
+    const hostId = req.headers["x-host-id"] as string;
     const room = await storage.createRoom(hostId);
     res.json(room);
   });

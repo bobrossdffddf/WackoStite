@@ -7,8 +7,60 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, Loader2, ArrowLeft, Image as ImageIcon, X } from "lucide-react";
+import { Send, Loader2, ArrowLeft, Image as ImageIcon, X, Video } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+
+function renderContent(content: string) {
+  // Handle markdown-style links [Text](Link)
+  const mdLinkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const parts = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = mdLinkRegex.exec(content)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(content.substring(lastIndex, match.index));
+    }
+    parts.push(
+      <a
+        key={match.index}
+        href={match[2]}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-primary underline hover:text-primary/80 break-all"
+      >
+        {match[1]}
+      </a>
+    );
+    lastIndex = mdLinkRegex.lastIndex;
+  }
+
+  if (lastIndex < content.length) {
+    const remaining = content.substring(lastIndex);
+    // Simple URL auto-linking for any other URLs
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const urlParts = remaining.split(urlRegex);
+    urlParts.forEach((part, i) => {
+      if (part.match(urlRegex)) {
+        parts.push(
+          <a
+            key={`url-${i}`}
+            href={part}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary underline hover:text-primary/80 break-all"
+          >
+            {part}
+          </a>
+        );
+      } else {
+        parts.push(part);
+      }
+    });
+  }
+
+  return <span className="whitespace-pre-wrap">{parts}</span>;
+}
 
 export default function RoomPage() {
   const { id } = useParams<{ id: string }>();
@@ -35,7 +87,7 @@ export default function RoomPage() {
   });
 
   const messageMutation = useMutation({
-    mutationFn: async ({ content, type = "text" }: { content: string, type?: "text" | "image" }) => {
+    mutationFn: async ({ content, type = "text" }: { content: string, type?: "text" | "image" | "video" }) => {
       await apiRequest("POST", `/api/rooms/${id}/messages`, { content, type }, {
         "x-host-id": hostId
       });
@@ -49,14 +101,19 @@ export default function RoomPage() {
     }
   });
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: "image" | "video") => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    if (type === "video" && file.size > 10 * 1024 * 1024) {
+      toast({ variant: "destructive", title: "File too large", description: "Max 10MB for videos." });
+      return;
+    }
 
     const reader = new FileReader();
     reader.onloadend = () => {
       const base64String = reader.result as string;
-      messageMutation.mutate({ content: base64String, type: "image" });
+      messageMutation.mutate({ content: base64String, type });
     };
     reader.readAsDataURL(file);
   };
@@ -112,8 +169,10 @@ export default function RoomPage() {
                 <div key={msg.id} className="bg-muted p-3 rounded-lg border border-primary/10 max-w-[90%] group relative">
                   {msg.type === "image" ? (
                     <img src={msg.content} alt="broadcast" className="rounded-md max-w-full h-auto mb-2" />
+                  ) : msg.type === "video" ? (
+                    <video src={msg.content} controls className="rounded-md max-w-full h-auto mb-2" />
                   ) : (
-                    <p className="text-sm leading-relaxed">{msg.content}</p>
+                    <div className="text-sm leading-relaxed">{renderContent(msg.content)}</div>
                   )}
                   <div className="flex items-center justify-between mt-1">
                     <span className="text-[10px] text-muted-foreground block">
@@ -158,20 +217,48 @@ export default function RoomPage() {
                   type="file"
                   ref={fileInputRef}
                   className="hidden"
-                  accept="image/*"
-                  onChange={handleImageUpload}
+                  accept="image/*,video/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file?.type.startsWith("video/")) {
+                      handleFileUpload(e, "video");
+                    } else {
+                      handleFileUpload(e, "image");
+                    }
+                  }}
                 />
-                <Button 
-                  type="button" 
-                  variant="outline" 
-                  size="icon"
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={messageMutation.isPending}
-                >
-                  <ImageIcon className="h-4 w-4" />
-                </Button>
+                <div className="flex gap-1">
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    size="icon"
+                    onClick={() => {
+                      if (fileInputRef.current) {
+                        fileInputRef.current.accept = "image/*";
+                        fileInputRef.current.click();
+                      }
+                    }}
+                    disabled={messageMutation.isPending}
+                  >
+                    <ImageIcon className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    size="icon"
+                    onClick={() => {
+                      if (fileInputRef.current) {
+                        fileInputRef.current.accept = "video/*";
+                        fileInputRef.current.click();
+                      }
+                    }}
+                    disabled={messageMutation.isPending}
+                  >
+                    <Video className="h-4 w-4" />
+                  </Button>
+                </div>
                 <Input
-                  placeholder="Broadcast message..."
+                  placeholder="Broadcast message... ([Text](Link) supported)"
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   disabled={messageMutation.isPending}
