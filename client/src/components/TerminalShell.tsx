@@ -43,7 +43,7 @@ export function TerminalShell({ onWeb }: { onWeb: () => void }) {
       case "/help":
         setHistory(prev => [...prev, { 
           type: "output", 
-          content: "/web - Open website normally\n/blog - List blog posts\n/projects - List projects\n/contact - Get contact info\n/clear - Clear terminal" 
+          content: "/web - Open website normally\n/blog - List blog posts\n/projects - List projects\n/join - Create or join a room\n/contact - Get contact info\n/clear - Clear terminal" 
         }]);
         break;
       case "/web":
@@ -135,6 +135,13 @@ export function TerminalShell({ onWeb }: { onWeb: () => void }) {
             </div>
           )
         }]);
+        break;
+      case "/join":
+        setHistory(prev => [...prev, { type: "output", content: "Navigating to join page..." }]);
+        setTimeout(() => {
+          onWeb();
+          setLocation("/join");
+        }, 500);
         break;
       case "/clear":
         setHistory([]);
