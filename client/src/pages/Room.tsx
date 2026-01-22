@@ -119,24 +119,6 @@ export default function RoomPage() {
                     <span className="text-[10px] text-muted-foreground block">
                       {new Date(msg.createdAt).toLocaleTimeString()}
                     </span>
-                    {isHost && (
-                      <div className="flex gap-2">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity"
-                          onClick={() => {
-                            const targetUserId = prompt("Enter User ID to ban:");
-                            if (targetUserId) {
-                              apiRequest("POST", `/api/rooms/${id}/ban`, { userId: targetUserId }, { "x-host-id": hostId })
-                                .then(() => toast({ title: "Banned", description: "User has been banned." }));
-                            }
-                          }}
-                        >
-                          <X className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    )}
                   </div>
                 </div>
               ))}
@@ -145,19 +127,24 @@ export default function RoomPage() {
           </ScrollArea>
 
           {isHost && (
-            <div className="space-y-4 pt-4 border-t">
-              <div className="flex justify-end">
+            <div className="space-y-4 pt-4 border-t border-primary/10">
+              <div className="flex justify-between items-center bg-destructive/5 p-3 rounded-lg border border-destructive/20">
+                <div className="text-sm">
+                  <p className="font-bold text-destructive uppercase tracking-tighter">Admin Control</p>
+                  <p className="text-[10px] text-muted-foreground">This will permanently terminate the broadcast.</p>
+                </div>
                 <Button 
                   variant="destructive" 
-                  size="sm" 
+                  size="sm"
+                  className="hover-elevate transition-all"
                   onClick={() => {
-                    if (confirm("Are you sure you want to close this room?")) {
+                    if (confirm("Terminate broadcast and close room?")) {
                       apiRequest("POST", `/api/rooms/${id}/close`, {}, { "x-host-id": hostId })
                         .then(() => setLocation("/join"));
                     }
                   }}
                 >
-                  Close Room
+                  Terminate Room
                 </Button>
               </div>
               <form 

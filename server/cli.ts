@@ -1,7 +1,5 @@
+#!/usr/bin/env npx tsx
 import { storage } from "./storage";
-import { registerRoutes } from "./routes";
-import express from "express";
-import { createServer } from "http";
 
 async function main() {
   const args = process.argv.slice(2);
@@ -10,7 +8,7 @@ async function main() {
   const targetId = args[2];
 
   if (!command) {
-    console.log("Usage: npx tsx server/cli.ts [close|ban|list] [room_id] [user_id_if_ban]");
+    console.log("Usage: server/cli.ts [close|ban|list] [room_id] [user_id_if_ban]");
     process.exit(1);
   }
 
