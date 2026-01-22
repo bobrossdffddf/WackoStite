@@ -120,20 +120,22 @@ export default function RoomPage() {
                       {new Date(msg.createdAt).toLocaleTimeString()}
                     </span>
                     {isHost && (
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity"
-                        onClick={() => {
-                          const targetUserId = prompt("Enter User ID to ban (from logs):");
-                          if (targetUserId) {
-                            apiRequest("POST", `/api/rooms/${id}/ban`, { userId: targetUserId }, { "x-host-id": hostId })
-                              .then(() => toast({ title: "Banned", description: "User has been banned." }));
-                          }
-                        }}
-                      >
-                        <X className="h-3 w-3" />
-                      </Button>
+                      <div className="flex gap-2">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity"
+                          onClick={() => {
+                            const targetUserId = prompt("Enter User ID to ban:");
+                            if (targetUserId) {
+                              apiRequest("POST", `/api/rooms/${id}/ban`, { userId: targetUserId }, { "x-host-id": hostId })
+                                .then(() => toast({ title: "Banned", description: "User has been banned." }));
+                            }
+                          }}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -144,6 +146,20 @@ export default function RoomPage() {
 
           {isHost && (
             <div className="space-y-4 pt-4 border-t">
+              <div className="flex justify-end">
+                <Button 
+                  variant="destructive" 
+                  size="sm" 
+                  onClick={() => {
+                    if (confirm("Are you sure you want to close this room?")) {
+                      apiRequest("POST", `/api/rooms/${id}/close`, {}, { "x-host-id": hostId })
+                        .then(() => setLocation("/join"));
+                    }
+                  }}
+                >
+                  Close Room
+                </Button>
+              </div>
               <form 
                 onSubmit={(e) => {
                   e.preventDefault();

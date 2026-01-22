@@ -1,4 +1,7 @@
 import { storage } from "./storage";
+import { registerRoutes } from "./routes";
+import express from "express";
+import { createServer } from "http";
 
 async function main() {
   const args = process.argv.slice(2);
@@ -11,28 +14,32 @@ async function main() {
     process.exit(1);
   }
 
+  // CLI runs in a separate process, so we need to be careful with MemStorage.
+  // In this specific template, we'll try to output useful info.
+  
   switch (command) {
     case "close":
+      if (!roomId) return console.log("Room ID required");
       await storage.closeRoom(roomId);
-      console.log(`Room ${roomId} closed.`);
+      console.log(`Command issued: Close Room ${roomId}`);
       break;
     case "ban":
-      if (!targetId) {
-        console.log("User ID required for ban");
-        process.exit(1);
-      }
+      if (!roomId || !targetId) return console.log("Room ID and User ID required");
       await storage.banUser(roomId, targetId);
-      console.log(`User ${targetId} banned from room ${roomId}.`);
+      console.log(`Command issued: Ban User ${targetId} from Room ${roomId}`);
       break;
     case "list":
       const rooms = await storage.getRooms();
-      console.log("Active Rooms:");
-      rooms.forEach(r => console.log(`- ${r.id} (Host: ${r.hostId}, Closed: ${r.isClosed})`));
+      if (rooms.length === 0) {
+        console.log("No active rooms found in this process memory.");
+      } else {
+        console.log("Active Rooms:");
+        rooms.forEach(r => console.log(`- ${r.id} (Host: ${r.hostId}, Closed: ${r.isClosed})`));
+      }
       break;
     default:
       console.log("Unknown command");
   }
 }
 
-// Note: MemStorage clears on restart. In a real app with persistent DB, this would work across restarts.
 main().catch(console.error);

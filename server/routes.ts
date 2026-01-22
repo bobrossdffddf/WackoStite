@@ -86,16 +86,16 @@ export async function registerRoutes(
     res.json(message);
   });
 
-  app.post("/api/rooms/:id/ban", async (req, res) => {
+  app.post("/api/rooms/:id/close", async (req, res) => {
     const room = await storage.getRoom(req.params.id);
     if (!room) return res.status(404).json({ message: "Room not found" });
 
-    const hostId = req.headers["x-host-id"] as string || "anonymous";
-    if (room.hostId !== hostId) {
-      return res.status(403).json({ message: "Only host can ban" });
+    const hostId = req.headers["x-host-id"] as string;
+    if (!hostId || room.hostId !== hostId) {
+      return res.status(403).json({ message: "Only host can close room" });
     }
 
-    await storage.banUser(req.params.id, req.body.userId);
+    await storage.closeRoom(req.params.id);
     res.json({ success: true });
   });
 
