@@ -17,7 +17,12 @@ export default function Join() {
   const handleHost = async () => {
     try {
       setIsHosting(true);
-      const res = await apiRequest("POST", "/api/rooms");
+      const hostId = Math.random().toString(36).substring(7);
+      localStorage.setItem("host-id", hostId);
+      
+      const res = await apiRequest("POST", "/api/rooms", {}, {
+        headers: { "x-host-id": hostId }
+      });
       const room = await res.json();
       toast({
         title: "Room Created!",

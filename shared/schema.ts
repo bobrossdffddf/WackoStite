@@ -21,12 +21,22 @@ export const blogPostSchema = z.object({
 export const roomSchema = z.object({
   id: z.string(), // 4-letter code
   createdAt: z.coerce.date(),
+  hostId: z.string(), // Session/User ID
+});
+
+export const messageSchema = z.object({
+  id: z.number(),
+  roomId: z.string(),
+  content: z.string(),
+  createdAt: z.coerce.date(),
 });
 
 export type Project = z.infer<typeof projectSchema>;
 export type BlogPost = z.infer<typeof blogPostSchema>;
 export type Room = z.infer<typeof roomSchema>;
+export type Message = z.infer<typeof messageSchema>;
 
 export const insertProjectSchema = projectSchema.omit({ id: true });
 export const insertBlogPostSchema = blogPostSchema.omit({ id: true });
 export const insertRoomSchema = roomSchema;
+export const insertMessageSchema = messageSchema.omit({ id: true });

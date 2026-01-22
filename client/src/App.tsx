@@ -11,6 +11,7 @@ import Projects from "@/pages/Projects";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import Join from "@/pages/Join";
+import RoomPage from "@/pages/Room";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -21,13 +22,7 @@ function Router() {
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/join" component={Join} />
-      <Route path="/room/:id">
-        {(params) => (
-          <div className="flex items-center justify-center min-h-screen">
-            <h1 className="text-4xl font-mono">Room: {params.id}</h1>
-          </div>
-        )}
-      </Route>
+      <Route path="/room/:id" component={RoomPage} />
       <Route component={NotFound} />
     </Switch>
   );

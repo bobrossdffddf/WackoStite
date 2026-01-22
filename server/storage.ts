@@ -1,4 +1,4 @@
-import { type Project, type BlogPost, type Room } from "@shared/schema";
+import { type Project, type BlogPost, type Room, type Message } from "@shared/schema";
 import { siteConfig } from "@shared/config";
 
 export interface IStorage {
@@ -11,13 +11,16 @@ export interface IStorage {
   clearBlogPosts(): Promise<void>;
   // Room methods
   getRoom(id: string): Promise<Room | undefined>;
-  createRoom(): Promise<Room>;
+  createRoom(hostId: string): Promise<Room>;
+  getMessages(roomId: string): Promise<Message[]>;
+  createMessage(message: Partial<Message>): Promise<Message>;
 }
 
 export class MemStorage implements IStorage {
   private projects: Project[];
   private blogPosts: BlogPost[];
   private rooms: Map<string, Room>;
+  private messages: Message[];
 
   constructor() {
     this.projects = siteConfig.projects.map((p, i) => ({ ...p, id: i + 1 }));
@@ -27,6 +30,7 @@ export class MemStorage implements IStorage {
       publishedAt: new Date()
     }));
     this.rooms = new Map();
+    this.messages = [];
   }
 
   async getProjects(): Promise<Project[]> {
@@ -76,7 +80,7 @@ export class MemStorage implements IStorage {
     return this.rooms.get(id.toUpperCase());
   }
 
-  async createRoom(): Promise<Room> {
+  async createRoom(hostId: string): Promise<Room> {
     const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     let id = "";
     do {
@@ -88,10 +92,26 @@ export class MemStorage implements IStorage {
 
     const room: Room = {
       id,
+      hostId,
       createdAt: new Date(),
     };
     this.rooms.set(id, room);
     return room;
+  }
+
+  async getMessages(roomId: string): Promise<Message[]> {
+    return this.messages.filter(m => m.roomId === roomId.toUpperCase());
+  }
+
+  async createMessage(message: Partial<Message>): Promise<Message> {
+    const newMessage: Message = {
+      id: this.messages.length + 1,
+      roomId: message.roomId!.toUpperCase(),
+      content: message.content!,
+      createdAt: new Date(),
+    };
+    this.messages.push(newMessage);
+    return newMessage;
   }
 }
 

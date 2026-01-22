@@ -35,8 +35,9 @@ export async function registerRoutes(
     res.json(post);
   });
 
-  app.post("/api/rooms", async (_req, res) => {
-    const room = await storage.createRoom();
+  app.post("/api/rooms", async (req, res) => {
+    const hostId = req.headers["x-host-id"] as string || "anonymous";
+    const room = await storage.createRoom(hostId);
     res.json(room);
   });
 
@@ -46,6 +47,29 @@ export async function registerRoutes(
       return res.status(404).json({ message: "Room not found" });
     }
     res.json(room);
+  });
+
+  app.get("/api/rooms/:id/messages", async (req, res) => {
+    const messages = await storage.getMessages(req.params.id);
+    res.json(messages);
+  });
+
+  app.post("/api/rooms/:id/messages", async (req, res) => {
+    const room = await storage.getRoom(req.params.id);
+    if (!room) {
+      return res.status(404).json({ message: "Room not found" });
+    }
+
+    const hostId = req.headers["x-host-id"] as string || "anonymous";
+    if (room.hostId !== hostId) {
+      return res.status(403).json({ message: "Only the host can post messages" });
+    }
+
+    const message = await storage.createMessage({
+      roomId: req.params.id,
+      content: req.body.content,
+    });
+    res.json(message);
   });
 
   return httpServer;
