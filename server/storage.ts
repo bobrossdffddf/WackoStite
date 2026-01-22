@@ -1,4 +1,4 @@
-import { type Project, type BlogPost, type Room, type Message } from "@shared/schema";
+import { type Project, type BlogPost, type Room, type Message, type Ban } from "@shared/schema";
 import { siteConfig } from "@shared/config";
 
 export interface IStorage {

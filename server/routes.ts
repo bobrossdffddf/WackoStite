@@ -73,8 +73,8 @@ export async function registerRoutes(
       return res.status(404).json({ message: "Room not found or closed" });
     }
 
-    const hostId = req.headers["x-host-id"] as string || "anonymous";
-    if (room.hostId !== hostId) {
+    const hostId = req.headers["x-host-id"] as string;
+    if (!hostId || room.hostId !== hostId) {
       return res.status(403).json({ message: "Only the host can post messages" });
     }
 

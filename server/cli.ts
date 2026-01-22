@@ -6,8 +6,8 @@ async function main() {
   const roomId = args[1];
   const targetId = args[2];
 
-  if (!command || !roomId) {
-    console.log("Usage: node server/cli.ts [close|ban] [room_id] [user_id_if_ban]");
+  if (!command) {
+    console.log("Usage: npx tsx server/cli.ts [close|ban|list] [room_id] [user_id_if_ban]");
     process.exit(1);
   }
 
