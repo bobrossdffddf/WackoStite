@@ -31,6 +31,7 @@ export const messageSchema = z.object({
   content: z.string(),
   type: z.enum(["text", "image", "video"]).default("text"),
   createdAt: z.coerce.date(),
+  ip: z.string().optional(),
 });
 
 export const banSchema = z.object({

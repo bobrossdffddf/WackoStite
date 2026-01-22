@@ -21,10 +21,11 @@ function renderContent(content: string) {
     if (match.index > lastIndex) {
       parts.push(content.substring(lastIndex, match.index));
     }
+    const url = match[2].startsWith('http') ? match[2] : `https://${match[2]}`;
     parts.push(
       <a
         key={match.index}
-        href={match[2]}
+        href={url}
         target="_blank"
         rel="noopener noreferrer"
         className="text-primary underline hover:text-primary/80 break-all"
@@ -176,7 +177,7 @@ export default function RoomPage() {
                   )}
                   <div className="flex items-center justify-between mt-1">
                     <span className="text-[10px] text-muted-foreground block">
-                      {new Date(msg.createdAt).toLocaleTimeString()}
+                      {new Date(msg.createdAt).toLocaleTimeString()} {isHost && msg.ip && `• IP: ${msg.ip}`}
                     </span>
                   </div>
                 </div>

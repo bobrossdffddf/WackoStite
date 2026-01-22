@@ -86,6 +86,7 @@ export async function registerRoutes(
       roomId: req.params.id,
       content: req.body.content,
       type: req.body.type || "text",
+      ip: req.ip || req.headers["x-forwarded-for"] as string,
     });
     res.json(message);
   });

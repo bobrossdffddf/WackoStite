@@ -125,6 +125,7 @@ export class MemStorage implements IStorage {
       content: message.content!,
       type: message.type || "text",
       createdAt: new Date(),
+      ip: message.ip,
     };
     this.messages.push(newMessage);
     return newMessage;
