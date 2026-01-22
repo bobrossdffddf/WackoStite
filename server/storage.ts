@@ -132,11 +132,14 @@ export class MemStorage implements IStorage {
   }
 
   async banUser(roomId: string, userId: string): Promise<void> {
-    this.bans.push({
-      id: this.bans.length + 1,
-      roomId: roomId.toUpperCase(),
-      userId,
-    });
+    const uppercaseRoomId = roomId.toUpperCase();
+    if (!this.bans.some(b => b.roomId === uppercaseRoomId && b.userId === userId)) {
+      this.bans.push({
+        id: this.bans.length + 1,
+        roomId: uppercaseRoomId,
+        userId,
+      });
+    }
   }
 
   async isBanned(roomId: string, userId: string): Promise<boolean> {
