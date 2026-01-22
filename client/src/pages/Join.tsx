@@ -21,7 +21,7 @@ export default function Join() {
       localStorage.setItem("host-id", hostId);
       
       const res = await apiRequest("POST", "/api/rooms", {}, {
-        headers: { "x-host-id": hostId }
+        "x-host-id": hostId
       });
       const room = await res.json();
       toast({

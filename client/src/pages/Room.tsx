@@ -29,7 +29,7 @@ export default function RoomPage() {
   const messageMutation = useMutation({
     mutationFn: async (content: string) => {
       await apiRequest("POST", `/api/rooms/${id}/messages`, { content }, {
-        headers: { "x-host-id": hostId }
+        "x-host-id": hostId
       });
     },
     onSuccess: () => {
