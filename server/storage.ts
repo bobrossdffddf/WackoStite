@@ -1,4 +1,4 @@
-import { type Project, type BlogPost } from "@shared/schema";
+import { type Project, type BlogPost, type Room } from "@shared/schema";
 import { siteConfig } from "@shared/config";
 
 export interface IStorage {
@@ -9,11 +9,15 @@ export interface IStorage {
   createBlogPost(post: Partial<BlogPost>): Promise<BlogPost>;
   clearProjects(): Promise<void>;
   clearBlogPosts(): Promise<void>;
+  // Room methods
+  getRoom(id: string): Promise<Room | undefined>;
+  createRoom(): Promise<Room>;
 }
 
 export class MemStorage implements IStorage {
   private projects: Project[];
   private blogPosts: BlogPost[];
+  private rooms: Map<string, Room>;
 
   constructor() {
     this.projects = siteConfig.projects.map((p, i) => ({ ...p, id: i + 1 }));
@@ -22,6 +26,7 @@ export class MemStorage implements IStorage {
       id: i + 1,
       publishedAt: new Date()
     }));
+    this.rooms = new Map();
   }
 
   async getProjects(): Promise<Project[]> {
@@ -65,6 +70,28 @@ export class MemStorage implements IStorage {
 
   async clearBlogPosts(): Promise<void> {
     this.blogPosts = [];
+  }
+
+  async getRoom(id: string): Promise<Room | undefined> {
+    return this.rooms.get(id.toUpperCase());
+  }
+
+  async createRoom(): Promise<Room> {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let id = "";
+    do {
+      id = "";
+      for (let i = 0; i < 4; i++) {
+        id += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+    } while (this.rooms.has(id));
+
+    const room: Room = {
+      id,
+      createdAt: new Date(),
+    };
+    this.rooms.set(id, room);
+    return room;
   }
 }
 

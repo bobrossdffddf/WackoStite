@@ -18,8 +18,15 @@ export const blogPostSchema = z.object({
   publishedAt: z.coerce.date().optional(),
 });
 
+export const roomSchema = z.object({
+  id: z.string(), // 4-letter code
+  createdAt: z.coerce.date(),
+});
+
 export type Project = z.infer<typeof projectSchema>;
 export type BlogPost = z.infer<typeof blogPostSchema>;
+export type Room = z.infer<typeof roomSchema>;
 
 export const insertProjectSchema = projectSchema.omit({ id: true });
 export const insertBlogPostSchema = blogPostSchema.omit({ id: true });
+export const insertRoomSchema = roomSchema;

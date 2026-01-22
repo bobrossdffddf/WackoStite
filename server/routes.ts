@@ -35,5 +35,18 @@ export async function registerRoutes(
     res.json(post);
   });
 
+  app.post("/api/rooms", async (_req, res) => {
+    const room = await storage.createRoom();
+    res.json(room);
+  });
+
+  app.get("/api/rooms/:id", async (req, res) => {
+    const room = await storage.getRoom(req.params.id);
+    if (!room) {
+      return res.status(404).json({ message: "Room not found" });
+    }
+    res.json(room);
+  });
+
   return httpServer;
 }

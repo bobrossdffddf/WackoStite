@@ -10,6 +10,7 @@ import Home from "@/pages/Home";
 import Projects from "@/pages/Projects";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
+import Join from "@/pages/Join";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -19,6 +20,14 @@ function Router() {
       <Route path="/projects" component={Projects} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={BlogPost} />
+      <Route path="/join" component={Join} />
+      <Route path="/room/:id">
+        {(params) => (
+          <div className="flex items-center justify-center min-h-screen">
+            <h1 className="text-4xl font-mono">Room: {params.id}</h1>
+          </div>
+        )}
+      </Route>
       <Route component={NotFound} />
     </Switch>
   );
