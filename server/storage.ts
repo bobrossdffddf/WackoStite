@@ -12,8 +12,13 @@ export interface IStorage {
   // Room methods
   getRoom(id: string): Promise<Room | undefined>;
   createRoom(hostId: string): Promise<Room>;
+  closeRoom(id: string): Promise<void>;
   getMessages(roomId: string): Promise<Message[]>;
   createMessage(message: Partial<Message>): Promise<Message>;
+  // Ban methods
+  banUser(roomId: string, userId: string): Promise<void>;
+  isBanned(roomId: string, userId: string): Promise<boolean>;
+  getRooms(): Promise<Room[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -21,6 +26,7 @@ export class MemStorage implements IStorage {
   private blogPosts: BlogPost[];
   private rooms: Map<string, Room>;
   private messages: Message[];
+  private bans: Ban[];
 
   constructor() {
     this.projects = siteConfig.projects.map((p, i) => ({ ...p, id: i + 1 }));
@@ -31,6 +37,7 @@ export class MemStorage implements IStorage {
     }));
     this.rooms = new Map();
     this.messages = [];
+    this.bans = [];
   }
 
   async getProjects(): Promise<Project[]> {
@@ -94,9 +101,17 @@ export class MemStorage implements IStorage {
       id,
       hostId,
       createdAt: new Date(),
+      isClosed: false,
     };
     this.rooms.set(id, room);
     return room;
+  }
+
+  async closeRoom(id: string): Promise<void> {
+    const room = this.rooms.get(id.toUpperCase());
+    if (room) {
+      room.isClosed = true;
+    }
   }
 
   async getMessages(roomId: string): Promise<Message[]> {
@@ -108,10 +123,27 @@ export class MemStorage implements IStorage {
       id: this.messages.length + 1,
       roomId: message.roomId!.toUpperCase(),
       content: message.content!,
+      type: message.type || "text",
       createdAt: new Date(),
     };
     this.messages.push(newMessage);
     return newMessage;
+  }
+
+  async banUser(roomId: string, userId: string): Promise<void> {
+    this.bans.push({
+      id: this.bans.length + 1,
+      roomId: roomId.toUpperCase(),
+      userId,
+    });
+  }
+
+  async isBanned(roomId: string, userId: string): Promise<boolean> {
+    return this.bans.some(b => b.roomId === roomId.toUpperCase() && b.userId === userId);
+  }
+
+  async getRooms(): Promise<Room[]> {
+    return Array.from(this.rooms.values());
   }
 }
 
